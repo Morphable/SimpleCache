@@ -84,8 +84,7 @@ class SimpleCache
         unset($parts[count($parts) -1]);
 
         $path = '';
-        foreach ($parts as $key => $part)
-        {
+        foreach ($parts as $key => $part) {
             $path .= '/' . $part;
             if (!file_exists($this->getPath($path))) {
                 mkdir($this->getPath($path));
