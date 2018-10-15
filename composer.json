@@ -2,6 +2,9 @@
     "name": "morphable/simple-cache",
     "description": "A simple cache component, easy to implement into any system",
     "license": "MIT",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "version": "1.0",
     "require": {
         "php" : "~7.0"
     },
