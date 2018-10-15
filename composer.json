@@ -1,5 +1,6 @@
 {
     "name": "morphable/simple-cache",
+    "description": "A simple cache component, easy to implement into any system",
     "license": "MIT",
     "require": {
         "php" : "~7.0"
