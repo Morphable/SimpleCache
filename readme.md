@@ -1,4 +1,11 @@
 # Simple cache component
+A simple cache component, easy to implement into any system
+
+## Installing
+
+```terminal
+$ composer require morphable/simple-cache
+```
 
 ```php
 <?php
