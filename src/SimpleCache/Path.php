@@ -1,6 +1,6 @@
 <?php
 
-namespace Morphable;
+namespace Morphable\SimpleCache;
 
 class Path
 {
@@ -47,5 +47,7 @@ class Path
 
             self::unlinkDirectory("{$path}/{$item}");
         }
+
+        \rmdir($path);
     }
 }

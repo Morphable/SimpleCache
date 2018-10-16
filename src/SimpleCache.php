@@ -2,8 +2,9 @@
 
 namespace Morphable;
 
-use \Morphable\Path;
+use \Morphable\SimpleCache\Path;
 use \Morphable\SimpleCache\SerializeJson;
+use \Morphable\SimpleCache\SerializeInterface;
 use \Morphable\SimpleCache\Exception\ItemNotFound;
 use \Morphable\SimpleCache\Exception\FailedToSetItem;
 use \Morphable\SimpleCache\Exception\FailedToGetItem;
@@ -23,6 +24,12 @@ class SimpleCache
     private $adapter;
 
     /**
+     * Cache item extension
+     * @var string
+     */
+    private $extension = '.cache';
+
+    /**
      * Construct
      * @param string base directory
      * @param object Morphable\SimpleCache\SerializeInterface
@@ -32,8 +39,10 @@ class SimpleCache
     {
         $this->directory = Path::normalize($directory);
 
-        $this->adapter = $adapter
-            ?? new SerializeJson();
+        $this->adapter = $adapter;
+        if ($adapter === null) {
+            $this->adapter = new SerializeJson();
+        }
     }
 
     /**
@@ -43,7 +52,7 @@ class SimpleCache
      */
     private function getPath(string $id): string
     {
-        return $this->directory . Path::normalize($id);
+        return $this->directory . Path::normalize($id) . $this->extension;
     }
 
     /**
@@ -80,18 +89,12 @@ class SimpleCache
             mkdir($this->directory);
         }
 
-        $parts = explode('/', trim($id, '/'));
-        unset($parts[count($parts) -1]);
-
-        $path = '';
-        foreach ($parts as $key => $part) {
-            $path .= '/' . $part;
-            if (!file_exists($this->getPath($path))) {
-                mkdir($this->getPath($path));
-            }
-        }
-
         $path = $this->getPath($id);
+        $dir = preg_replace("/\/\w*{$this->extension}$/", '', $path);
+
+        if ($dir !== null && !is_dir($dir)) {
+            mkdir($dir);
+        }
 
         $put = file_put_contents($path, $this->adapter->serialize($content));
 
