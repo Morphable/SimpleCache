@@ -47,3 +47,8 @@ $serializer = new MySerializer();
 $cache = new SimpleCache($root . '/.cache', $serializer);
 
 ```
+
+## Contributing
+- Follow PSR-2 and the .editorconfig
+- Start namespaces with \Morphable\SimpleCache
+- Make tests
