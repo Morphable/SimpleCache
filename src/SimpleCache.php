@@ -90,7 +90,9 @@ class SimpleCache
         }
 
         $path = $this->getPath($id);
-        $dir = preg_replace("/\/\w*{$this->extension}$/", '', $path);
+        $dir = explode('/', $path);
+        array_pop($dir);
+        $dir = implode('/', $dir);
 
         if ($dir !== null && !is_dir($dir)) {
             mkdir($dir);
