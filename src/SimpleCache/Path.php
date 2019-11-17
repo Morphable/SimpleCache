@@ -5,12 +5,25 @@ namespace Morphable\SimpleCache;
 class Path
 {
     /**
+     * check os is windows
+     * @return bool
+     */
+    public static function isWindows()
+    {
+        return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
+    }
+
+    /**
      * Normalize path
      * @param string path
      * @return string normalized path
      */
     public static function normalize(string $path)
     {
+        if (preg_match('/\w\:/', $path) && self::isWindows()) {
+            return trim(trim($path), '/');
+        }
+
         return '/' . trim($path, '/');
     }
 
